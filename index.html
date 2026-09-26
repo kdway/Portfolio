@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kais Dakhli — IT Support & Full-Stack Developer</title>
+  <meta name="description" content="Kais Dakhli — Bilingual IT Support Technician (FR/EN) and Full-Stack MERN Developer based in Tunis." />
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            accent: '#14b8a6',
+            accentDark: '#0d9488',
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          },
+        },
+      },
+    };
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; transition: background-color .3s ease, color .3s ease; }
+
+    .gradient-text {
+      background: linear-gradient(90deg, #14b8a6, #06b6d4, #3b82f6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .glow { box-shadow: 0 0 40px rgba(20, 184, 166, 0.15); }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity .8s ease, transform .8s ease;
+    }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    /* Language dropdown */
+    .lang-menu { display: none; }
+    .lang-menu.open { display: block; }
+  </style>
+</head>
+
+<body class="bg-white text-slate-800 dark:bg-slate-950 dark:text-slate-200 antialiased">
+
+  <!-- ============ NAVBAR ============ -->
+  <header class="fixed top-0 inset-x-0 z-50 backdrop-blur-md bg-white/80 dark:bg-slate-950/70 border-b border-slate-200 dark:border-slate-800">
+    <nav class="max-w-6xl mx-auto flex items-center justify-between px-6 py-4">
+      <a href="#home" class="text-lg font-bold tracking-tight">
+        Kais<span class="text-accent">.</span>
+      </a>
+
+      <!-- Desktop nav -->
+      <ul class="hidden md:flex items-center gap-8 text-sm text-slate-600 dark:text-slate-300">
+        <li><a href="#about"      data-i18n="nav.about"      class="hover:text-accent transition">About</a></li>
+        <li><a href="#skills"     data-i18n="nav.skills"     class="hover:text-accent transition">Skills</a></li>
+        <li><a href="#experience" data-i18n="nav.experience" class="hover:text-accent transition">Experience</a></li>
+        <li><a href="#education"  data-i18n="nav.education"  class="hover:text-accent transition">Education</a></li>
+        <li><a href="#contact"    data-i18n="nav.contact"    class="hover:text-accent transition">Contact</a></li>
+      </ul>
+
+      <!-- Right controls -->
+      <div class="flex items-center gap-2">
+
+        <!-- Language dropdown -->
+        <div class="relative">
+          <button id="langBtn" class="flex items-center gap-1 text-sm px-3 py-2 rounded-full border border-slate-300 dark:border-slate-700 hover:border-accent transition">
+            <span id="langLabel">EN</span>
+            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+            </svg>
+          </button>
+          <div id="langMenu" class="lang-menu absolute right-0 mt-2 w-32 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl shadow-lg overflow-hidden">
+            <button data-lang="en" class="block w-full text-left px-4 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-800">🇬🇧 English</button>
+            <button data-lang="fr" class="block w-full text-left px-4 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-800">🇫🇷 Français</button>
+            <button data-lang="de" class="block w-full text-left px-4 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-800">🇩🇪 Deutsch</button>
+          </div>
+        </div>
+
+        <!-- Theme toggle -->
+        <button id="themeBtn" aria-label="Toggle theme"
+                class="p-2 rounded-full border border-slate-300 dark:border-slate-700 hover:border-accent transition">
+          <!-- Sun (shown in dark mode) -->
+          <svg id="iconSun" class="w-5 h-5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707M17.657 17.657l-.707-.707M6.343 6.343l-.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z"/>
+          </svg>
+          <!-- Moon (shown in light mode) -->
+          <svg id="iconMoon" class="w-5 h-5 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+          </svg>
+        </button>
+
+        <!-- Mobile menu button -->
+        <button id="menuBtn" class="md:hidden p-2 rounded-full border border-slate-300 dark:border-slate-700">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Mobile menu -->
+    <div id="mobileMenu" class="hidden md:hidden bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800">
+      <ul class="flex flex-col p-6 gap-4 text-slate-600 dark:text-slate-300">
+        <li><a href="#about"      data-i18n="nav.about"      class="block hover:text-accent transition">About</a></li>
+        <li><a href="#skills"     data-i18n="nav.skills"     class="block hover:text-accent transition">Skills</a></li>
+        <li><a href="#experience" data-i18n="nav.experience" class="block hover:text-accent transition">Experience</a></li>
+        <li><a href="#education"  data-i18n="nav.education"  class="block hover:text-accent transition">Education</a></li>
+        <li><a href="#contact"    data-i18n="nav.contact"    class="block hover:text-accent transition">Contact</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- ============ HERO ============ -->
+  <section id="home" class="min-h-screen flex items-center justify-center px-6 pt-24">
+    <div class="max-w-4xl mx-auto text-center fade-in">
+      <p class="text-accent text-sm font-medium tracking-widest uppercase mb-4" data-i18n="hero.location">
+        Tunis, Tunisia · Open to opportunities
+      </p>
+      <h1 class="text-4xl sm:text-5xl md:text-7xl font-extrabold tracking-tight leading-tight">
+        <span data-i18n="hero.greeting">Hi, I'm</span> <span class="gradient-text">Kais Dakhli</span>
+      </h1>
+      <h2 class="text-xl sm:text-2xl md:text-3xl text-slate-500 dark:text-slate-400 mt-4 font-light" data-i18n="hero.title">
+        Bilingual IT Support Technician · Full-Stack MERN Developer
+      </h2>
+      <p class="mt-6 text-slate-500 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed" data-i18n="hero.desc">
+        I combine hands-on IT support expertise with a growing full-stack development skillset.
+        Rigorous, proactive, and customer-focused — I solve problems fast and keep users happy.
+      </p>
+
+      <div class="mt-10 flex flex-wrap justify-center gap-4">
+        <a href="#contact" data-i18n="hero.cta1"
+           class="bg-accent hover:bg-accentDark text-slate-950 font-semibold px-6 py-3 rounded-full transition">
+          Get in touch
+        </a>
+        <a href="https://github.com/kdway" target="_blank" rel="noopener" data-i18n="hero.cta2"
+           class="border border-slate-300 dark:border-slate-700 hover:border-accent hover:text-accent px-6 py-3 rounded-full transition">
+          View GitHub
+        </a>
+      </div>
+
+      <!-- Quick contact chips -->
+      <div class="mt-12 flex flex-wrap justify-center gap-3 text-sm text-slate-500 dark:text-slate-400">
+        <a href="mailto:kaisdakhli@yahoo.fr" class="px-4 py-2 rounded-full bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-accent transition">
+          ✉ kaisdakhli@yahoo.fr
+        </a>
+        <a href="tel:+21652168516" class="px-4 py-2 rounded-full bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-accent transition">
+          📞 +216 52 16 85 16
+        </a>
+        <a href="https://www.linkedin.com/in/kais-dakhli-155246132" target="_blank" rel="noopener"
+           class="px-4 py-2 rounded-full bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-accent transition">
+          in/kais-dakhli
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ABOUT ============ -->
+  <section id="about" class="py-24 px-6 border-t border-slate-200 dark:border-slate-900">
+    <div class="max-w-5xl mx-auto fade-in">
+      <h2 class="text-3xl md:text-4xl font-bold mb-8">
+        <span data-i18n="about.title1">About</span> <span class="text-accent" data-i18n="about.title2">me</span>
+      </h2>
+      <div class="grid md:grid-cols-3 gap-10">
+        <div class="md:col-span-2 space-y-4 text-slate-500 dark:text-slate-400 leading-relaxed">
+          <p data-i18n="about.p1">
+            Bilingual (FR/EN) IT Support Technician with solid experience in hardware,
+            software, and first-level network support. I've worked with international
+            teams at HP Inc., UPS Logistik, and Delta Center — handling ticketing,
+            diagnostics, and end-user assistance across Windows, macOS, and peripherals.
+          </p>
+          <p data-i18n="about.p2">
+            Beyond support, I'm a junior Full-Stack Developer specialized in the
+            MERN stack (MongoDB, Express, React, Node.js) with a strong grasp of modern
+            web fundamentals. I'm currently expanding my dev skills to bridge the gap
+            between IT operations and software engineering.
+          </p>
+          <p data-i18n="about.p3">
+            What drives me: clear communication, patient problem-solving, and delivering
+            a smooth experience for every user — technical or not.
+          </p>
+        </div>
+
+        <div class="space-y-4">
+          <div class="bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 glow">
+            <p class="text-4xl font-bold text-accent">3+</p>
+            <p class="text-sm text-slate-500 dark:text-slate-400 mt-1" data-i18n="about.stat1">Years in IT Support & Customer Service</p>
+          </div>
+          <div class="bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6">
+            <p class="text-4xl font-bold text-accent">3</p>
+            <p class="text-sm text-slate-500 dark:text-slate-400 mt-1" data-i18n="about.stat2">Languages spoken (FR · EN · DE)</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SKILLS ============ -->
+  <section id="skills" class="py-24 px-6 border-t border-slate-200 dark:border-slate-900">
+    <div class="max-w-5xl mx-auto fade-in">
+      <h2 class="text-3xl md:text-4xl font-bold mb-12">
+        <span data-i18n="skills.title1">Skills</span> <span class="text-accent" data-i18n="skills.title2">& expertise</span>
+      </h2>
+
+      <div class="grid md:grid-cols-2 gap-8">
+        <div class="bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-8">
+          <h3 class="text-xl font-semibold mb-6 flex items-center gap-3">
+            <span class="w-2 h-2 rounded-full bg-accent"></span>
+            <span data-i18n="skills.tech">Technical</span>
+          </h3>
+          <ul class="space-y-3 text-slate-500 dark:text-slate-400">
+            <li data-i18n="skills.tech1">✅ Bilingual technical support (FR/EN) — remote & on-site</li>
+            <li data-i18n="skills.tech2">✅ Hardware, software & network troubleshooting</li>
+            <li data-i18n="skills.tech3">✅ First-level network support: routers, Wi-Fi, connectivity</li>
+            <li data-i18n="skills.tech4">✅ Workstation installation & configuration</li>
+            <li data-i18n="skills.tech5">✅ CRM, ticketing & diagnostic tools (ServiceNow, Xstore, Logmein, HP)</li>
+            <li data-i18n="skills.tech6">✅ Windows, macOS, printers, peripherals</li>
+            <li data-i18n="skills.tech7">✅ MERN stack: MongoDB, Express, React, Node.js</li>
+          </ul>
+        </div>
+
+        <div class="bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-8">
+          <h3 class="text-xl font-semibold mb-6 flex items-center gap-3">
+            <span class="w-2 h-2 rounded-full bg-accent"></span>
+            <span data-i18n="skills.soft">Soft Skills</span>
+          </h3>
+          <ul class="space-y-3 text-slate-500 dark:text-slate-400">
+            <li data-i18n="skills.soft1">💬 Customer-oriented with active listening</li>
+            <li data-i18n="skills.soft2">💬 Clear communication & presentation for non-technical users</li>
+            <li data-i18n="skills.soft3">💬 Rigor, patience & proactivity in problem-solving</li>
+            <li data-i18n="skills.soft4">💬 Comfortable in multicultural & international teams</li>
+          </ul>
+
+          <h3 class="text-xl font-semibold mt-8 mb-6 flex items-center gap-3">
+            <span class="w-2 h-2 rounded-full bg-accent"></span>
+            <span data-i18n="skills.lang">Languages</span>
+          </h3>
+          <ul class="space-y-3 text-slate-500 dark:text-slate-400">
+            <li data-i18n="skills.lang1">🇫🇷 French — C1</li>
+            <li data-i18n="skills.lang2">🇬🇧 English — Fluent</li>
+            <li data-i18n="skills.lang3">🇩🇪 German — Fluent</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="mt-12 flex flex-wrap gap-3">
+        <span class="px-4 py-1.5 text-sm bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-full">MongoDB</span>
+        <span class="px-4 py-1.5 text-sm bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-full">Express</span>
+        <span class="px-4 py-1.5 text-sm bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-full">React</span>
+        <span class="px-4 py-1.5 text-sm bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-full">Node.js</span>
+        <span class="px-4 py-1.5 text-sm bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-full">JavaScript</span>
+        <span class="px-4 py-1.5 text-sm bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-full">Windows</span>
+        <span class="px-4 py-1.5 text-sm bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-full">macOS</span>
+        <span class="px-4 py-1.5 text-sm bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-full">Networking</span>
+        <span class="px-4 py-1.5 text-sm bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-full">CRM</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ EXPERIENCE ============ -->
+
+  <section id="experience" class="py-24 px-6 border-t border-slate-200 dark:border-slate-900">
+    <div class="max-w-4xl mx-auto fade-in">
+      <h2 class="text-3xl md:text-4xl font-bold mb-12">
+        <span data-i18n="exp.title1">Professional</span> <span class="text-accent" data-i18n="exp.title2">Experience</span>
+      </h2>
+
+      <div class="relative border-l border-slate-200 dark:border-slate-800 pl-8 space-y-12">
+
+        <!-- Job 0 — Gevkom -->
+        <div class="relative">
+          <span class="absolute -left-[41px] top-1 w-4 h-4 rounded-full bg-accent border-4 border-white dark:border-slate-950"></span>
+          <p class="text-sm text-accent font-medium">2026</p>
+          <h3 class="text-xl font-semibold mt-1" data-i18n="exp.j0.title">Customer Service Specialist</h3>
+          <p class="text-slate-400 dark:text-slate-500 text-sm mb-3">Gevekom · Tunis</p>
+          <ul class="text-slate-500 dark:text-slate-400 space-y-2 list-disc list-inside">
+            <li data-i18n="exp.j0.b1">Answer customer inquiries about orders, deliveries, products, payments, and returns.</li>
+            <li data-i18n="exp.j0.b2">Support customers with complaints and find suitable solutions.</li>
+            <li data-i18n="exp.j0.b3">Assist customers via phone, email, and chat.</li>
+            <li data-i18n="exp.j0.b4">Document customer requests carefully in our systems.</li>
+            <li data-i18n="exp.j0.b5">Ensure high customer satisfaction and strong service quality through my work.</li>
+          </ul>
+        </div>
+
+        <!-- Job 1 — Delta Center -->
+        <div class="relative">
+          <span class="absolute -left-[41px] top-1 w-4 h-4 rounded-full bg-accent border-4 border-white dark:border-slate-950"></span>
+          <p class="text-sm text-accent font-medium">2024 – 2025</p>
+          <h3 class="text-xl font-semibold mt-1" data-i18n="exp.j1.title">IT Support Technician</h3>
+          <p class="text-slate-400 dark:text-slate-500 text-sm mb-3">Delta Center · Tunis</p>
+          <ul class="text-slate-500 dark:text-slate-400 space-y-2 list-disc list-inside">
+            <li data-i18n="exp.j1.b1">Managed hardware incidents (computers, printers, peripherals) and first-level network support (connectivity, router/Wi-Fi configuration).</li>
+            <li data-i18n="exp.j1.b2">Installed and configured workstations for employees.</li>
+            <li data-i18n="exp.j1.b3">Tracked tickets and reporting via CRM, ensuring fast, efficient, customer-focused support.</li>
+          </ul>
+        </div>
+
+        <!-- Job 2 — HP -->
+        <div class="relative">
+          <span class="absolute -left-[41px] top-1 w-4 h-4 rounded-full bg-accent border-4 border-white dark:border-slate-950"></span>
+          <p class="text-sm text-accent font-medium">2020 – 2021</p>
+          <h3 class="text-xl font-semibold mt-1" data-i18n="exp.j2.title">Technical Support Advisor</h3>
+          <p class="text-slate-400 dark:text-slate-500 text-sm mb-3">HP Inc. · Tunis</p>
+          <ul class="text-slate-500 dark:text-slate-400 space-y-2 list-disc list-inside">
+            <li data-i18n="exp.j2.b1">Provided technical assistance and handled customer requests with proactive incident resolution.</li>
+            <li data-i18n="exp.j2.b2">Coordinated with internal teams to ensure reliable service.</li>
+            <li data-i18n="exp.j2.b3">Used CRM tools and clear communication to optimize customer satisfaction.</li>
+          </ul>
+        </div>
+
+        <!-- Job 3 — UPS -->
+        <div class="relative">
+          <span class="absolute -left-[41px] top-1 w-4 h-4 rounded-full bg-accent border-4 border-white dark:border-slate-950"></span>
+          <p class="text-sm text-accent font-medium">2019</p>
+          <h3 class="text-xl font-semibold mt-1" data-i18n="exp.j3.title">Customer Advisor</h3>
+          <p class="text-slate-400 dark:text-slate-500 text-sm mb-3">UPS Logistik · Tunis</p>
+          <ul class="text-slate-500 dark:text-slate-400 space-y-2 list-disc list-inside">
+            <li data-i18n="exp.j3.b1">Supported customers with national and international shipment tracking.</li>
+            <li data-i18n="exp.j3.b2">Resolved complaints proactively and coordinated with logistics teams.</li>
+            <li data-i18n="exp.j3.b3">Used CRM tools and clear communication to strengthen customer satisfaction.</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ EDUCATION ============ -->
+  <section id="education" class="py-24 px-6 border-t border-slate-200 dark:border-slate-900">
+    <div class="max-w-4xl mx-auto fade-in">
+      <h2 class="text-3xl md:text-4xl font-bold mb-12">
+        <span data-i18n="edu.title1">Education</span> <span class="text-accent" data-i18n="edu.title2">& Training</span>
+      </h2>
+
+      <div class="grid sm:grid-cols-2 gap-6">
+        <div class="bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6">
+          <p class="text-accent text-sm font-medium mb-2" data-i18n="edu.e1.tag">Full-Stack Development</p>
+          <h3 class="font-semibold text-lg" data-i18n="edu.e1.title">MERN Stack Program</h3>
+          <p class="text-slate-400 dark:text-slate-500 text-sm mt-1">Masterclass · Tunis</p>
+        </div>
+
+        <div class="bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6">
+          <p class="text-accent text-sm font-medium mb-2" data-i18n="edu.e2.tag">Technical Diploma</p>
+          <h3 class="font-semibold text-lg" data-i18n="edu.e2.title">Automated Systems Maintenance</h3>
+          <p class="text-slate-400 dark:text-slate-500 text-sm mt-1">CSE-AHK-GIZ</p>
+        </div>
+
+        <div class="bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 sm:col-span-2">
+          <p class="text-accent text-sm font-medium mb-2" data-i18n="edu.e3.tag">Baccalaureate</p>
+          <h3 class="font-semibold text-lg" data-i18n="edu.e3.title">Technical Baccalaureate</h3>
+          <p class="text-slate-400 dark:text-slate-500 text-sm mt-1">Lycée Bardo · Tunis</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CONTACT ============ -->
+  <section id="contact" class="py-24 px-6 border-t border-slate-200 dark:border-slate-900">
+    <div class="max-w-3xl mx-auto text-center fade-in">
+      <h2 class="text-3xl md:text-4xl font-bold mb-4">
+        <span data-i18n="contact.title1">Let's</span> <span class="text-accent" data-i18n="contact.title2">work together</span>
+      </h2>
+      <p class="text-slate-500 dark:text-slate-400 mb-10 max-w-xl mx-auto" data-i18n="contact.desc">
+        I'm open to IT support roles, junior full-stack development positions, and
+        freelance projects. Feel free to reach out — I reply fast.
+      </p>
+
+      <div class="grid sm:grid-cols-2 gap-4 max-w-xl mx-auto">
+        <a href="mailto:kaisdakhli@yahoo.fr"
+           class="bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-accent rounded-2xl p-6 transition text-left">
+          <p class="text-xs text-slate-400 dark:text-slate-500 uppercase tracking-wider" data-i18n="contact.email">Email</p>
+          <p class="mt-2 font-medium">kaisdakhli@yahoo.fr</p>
+        </a>
+        <a href="tel:+21652168516"
+           class="bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-accent rounded-2xl p-6 transition text-left">
+          <p class="text-xs text-slate-400 dark:text-slate-500 uppercase tracking-wider" data-i18n="contact.phone">Phone</p>
+          <p class="mt-2 font-medium">+216 52 16 85 16</p>
+        </a>
+        <a href="https://www.linkedin.com/in/kais-dakhli-155246132" target="_blank" rel="noopener"
+           class="bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-accent rounded-2xl p-6 transition text-left">
+          <p class="text-xs text-slate-400 dark:text-slate-500 uppercase tracking-wider">LinkedIn</p>
+          <p class="mt-2 font-medium">/in/kais-dakhli</p>
+        </a>
+        <a href="https://github.com/kdway" target="_blank" rel="noopener"
+           class="bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-accent rounded-2xl p-6 transition text-left">
+          <p class="text-xs text-slate-400 dark:text-slate-500 uppercase tracking-wider">GitHub</p>
+          <p class="mt-2 font-medium">github.com/kdway</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="border-t border-slate-200 dark:border-slate-900 py-8 px-6">
+    <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-slate-400 dark:text-slate-500">
+      <p>© <span id="year"></span> Kais Dakhli. <span data-i18n="footer.rights">All rights reserved.</span></p>
+      <p data-i18n="footer.built">Built with HTML, Tailwind CSS & a lot of ☕</p>
+    </div>
+  </footer>
+
+  <!-- ============ TRANSLATIONS ============ -->
+  <script>
+    const translations = {
+      en: {
+        "nav.about": "About",
+        "nav.skills": "Skills",
+        "nav.experience": "Experience",
+        "nav.education": "Education",
+        "nav.contact": "Contact",
+
+        "hero.location": "Tunis, Tunisia · Open to opportunities",
+        "hero.greeting": "Hi, I'm",
+        "hero.title": "Bilingual IT Support Technician · Full-Stack MERN Developer",
+        "hero.desc": "I combine hands-on IT support expertise with a growing full-stack development skillset. Rigorous, proactive, and customer-focused — I solve problems fast and keep users happy.",
+        "hero.cta1": "Get in touch",
+        "hero.cta2": "View GitHub",
+
+        "about.title1": "About",
+        "about.title2": "me",
+        "about.p1": "Bilingual (FR/EN) IT Support Technician with solid experience in hardware, software, and first-level network support. I've worked with international teams at HP Inc., UPS Logistik, and Delta Center — handling ticketing, diagnostics, and end-user assistance across Windows, macOS, and peripherals.",
+        "about.p2": "Beyond support, I'm a junior Full-Stack Developer specialized in the MERN stack (MongoDB, Express, React, Node.js) with a strong grasp of modern web fundamentals. I'm currently expanding my dev skills to bridge the gap between IT operations and software engineering.",
+        "about.p3": "What drives me: clear communication, patient problem-solving, and delivering a smooth experience for every user — technical or not.",
+        "about.stat1": "Years in IT Support & Customer Service",
+        "about.stat2": "Languages spoken (FR · EN · DE)",
+
+        "skills.title1": "Skills",
+        "skills.title2": "& expertise",
+        "skills.tech": "Technical",
+        "skills.tech1": "✅ Bilingual technical support (FR/EN) — remote & on-site",
+        "skills.tech2": "✅ Hardware, software & network troubleshooting",
+        "skills.tech3": "✅ First-level network support: routers, Wi-Fi, connectivity",
+        "skills.tech4": "✅ Workstation installation & configuration",
+        "skills.tech5": "✅ CRM, ticketing & diagnostic tools (ServiceNow, Xstore, Logmein, HP)",
+        "skills.tech6": "✅ Windows, macOS, printers, peripherals",
+        "skills.tech7": "✅ MERN stack: MongoDB, Express, React, Node.js",
+        "skills.soft": "Soft Skills",
+        "skills.soft1": "💬 Customer-oriented with active listening",
+        "skills.soft2": "💬 Clear communication & presentation for non-technical users",
+        "skills.soft3": "💬 Rigor, patience & proactivity in problem-solving",
+        "skills.soft4": "💬 Comfortable in multicultural & international teams",
+        "skills.lang": "Languages",
+        "skills.lang1": "🇫🇷 French — C1",
+        "skills.lang2": "🇬🇧 English — Fluent",
+        "skills.lang3": "🇩🇪 German — Fluent",
+
+        "exp.title1": "Professional",
+        "exp.title2": "Experience",
+        "exp.present": "Present",
+
+        "exp.j0.title": "Customer Service Specialist",
+        "exp.j0.b1": "Answer customer inquiries about orders, deliveries, products, payments, and returns.",
+        "exp.j0.b2": "Support customers with complaints and find suitable solutions.",
+        "exp.j0.b3": "Assist customers via phone, email, and chat.",
+        "exp.j0.b4": "Document customer requests carefully in our systems.",
+        "exp.j0.b5": "Ensure high customer satisfaction and strong service quality through my work.",
+
+        "exp.j1.title": "IT Support Technician",
+        "exp.j1.b1": "Managed hardware incidents (computers, printers, peripherals) and first-level network support (connectivity, router/Wi-Fi configuration).",
+        "exp.j1.b2": "Installed and configured workstations for employees.",
+        "exp.j1.b3": "Tracked tickets and reporting via CRM, ensuring fast, efficient, customer-focused support.",
+        "exp.j2.title": "Technical Support Advisor",
+        "exp.j2.b1": "Provided technical assistance and handled customer requests with proactive incident resolution.",
+        "exp.j2.b2": "Coordinated with internal teams to ensure reliable service.",
+        "exp.j2.b3": "Used CRM tools and clear communication to optimize customer satisfaction.",
+        "exp.j3.title": "Customer Advisor",
+        "exp.j3.b1": "Supported customers with national and international shipment tracking.",
+        "exp.j3.b2": "Resolved complaints proactively and coordinated with logistics teams.",
+        "exp.j3.b3": "Used CRM tools and clear communication to strengthen customer satisfaction.",
+
+        "edu.title1": "Education",
+        "edu.title2": "& Training",
+        "edu.e1.tag": "Full-Stack Development",
+        "edu.e1.title": "MERN Stack Program",
+        "edu.e2.tag": "Technical Diploma",
+        "edu.e2.title": "Automated Systems Maintenance",
+        "edu.e3.tag": "Baccalaureate",
+        "edu.e3.title": "Technical Baccalaureate",
+
+        "contact.title1": "Let's",
+        "contact.title2": "work together",
+        "contact.desc": "I'm open to IT support roles, junior full-stack development positions, and freelance projects. Feel free to reach out — I reply fast.",
+        "contact.email": "Email",
+        "contact.phone": "Phone",
+
+        "footer.rights": "All rights reserved.",
+        "footer.built": "Built with HTML, Tailwind CSS & a lot of ☕"
+      },
+
+      fr: {
+        "nav.about": "À propos",
+        "nav.skills": "Compétences",
+        "nav.experience": "Expérience",
+        "nav.education": "Formation",
+        "nav.contact": "Contact",
+
+        "hero.location": "Tunis, Tunisie · Ouvert aux opportunités",
+        "hero.greeting": "Bonjour, je suis",
+        "hero.title": "Technicien Support IT Bilingue · Développeur Full-Stack MERN",
+        "hero.desc": "Je combine une expertise en assistance informatique avec des compétences croissantes en développement full-stack. Rigoureux, proactif et orienté client — je résous les problèmes rapidement et assure la satisfaction des utilisateurs.",
+        "hero.cta1": "Me contacter",
+        "hero.cta2": "Voir GitHub",
+
+        "about.title1": "À propos",
+        "about.title2": "de moi",
+        "about.p1": "Technicien support informatique bilingue (FR/EN) avec une solide expérience en matériel, logiciel et support réseau de premier niveau. J'ai travaillé avec des équipes internationales chez HP Inc., UPS Logistik et Delta Center — gestion des tickets, diagnostics et assistance aux utilisateurs sous Windows, macOS et périphériques.",
+        "about.p2": "Au-delà du support, je suis développeur Full-Stack junior spécialisé dans la stack MERN (MongoDB, Express, React, Node.js) avec une bonne maîtrise des fondamentaux du web moderne. Je développe actuellement mes compétences pour faire le lien entre l'IT opérationnel et l'ingénierie logicielle.",
+        "about.p3": "Ce qui me motive : une communication claire, une résolution patiente des problèmes et une expérience fluide pour chaque utilisateur — technique ou non.",
+        "about.stat1": "Années en support IT & service client",
+        "about.stat2": "Langues parlées (FR · EN · DE)",
+
+        "skills.title1": "Compétences",
+        "skills.title2": "& expertise",
+        "skills.tech": "Techniques",
+        "skills.tech1": "✅ Support technique bilingue (FR/EN) — à distance et sur site",
+        "skills.tech2": "✅ Diagnostic, dépannage matériel, logiciel et réseau",
+        "skills.tech3": "✅ Support réseau de premier niveau : routeurs, Wi-Fi, connectivité",
+        "skills.tech4": "✅ Installation et configuration de postes de travail",
+        "skills.tech5": "✅ Outils CRM, ticketing et diagnostic (ServiceNow, Xstore, Logmein, HP)",
+        "skills.tech6": "✅ Windows, macOS, imprimantes, périphériques",
+        "skills.tech7": "✅ Stack MERN : MongoDB, Express, React, Node.js",
+        "skills.soft": "Relationnelles",
+        "skills.soft1": "💬 Orientation client et sens de l'écoute",
+        "skills.soft2": "💬 Communication claire et présentation efficace pour clients non techniques",
+        "skills.soft3": "💬 Rigueur, patience et proactivité dans la résolution des problèmes",
+        "skills.soft4": "💬 Capacité à travailler en équipe multiculturelle et internationale",
+        "skills.lang": "Langues",
+        "skills.lang1": "🇫🇷 Français — C1",
+        "skills.lang2": "🇬🇧 Anglais — Courant",
+        "skills.lang3": "🇩🇪 Allemand — Courant",
+
+        "exp.title1": "Expériences",
+        "exp.title2": "professionnelles",
+        "exp.present": "Aujourd'hui",
+
+        "exp.j0.title": "Conseiller Service Client",
+        "exp.j0.b1": "Répondre aux demandes des clients concernant les commandes, les livraisons, les produits, les paiements et les retours.",
+        "exp.j0.b2": "Accompagner les clients dans leurs réclamations et trouver des solutions adaptées.",
+        "exp.j0.b3": "Assister les clients par téléphone, e-mail et chat.",
+        "exp.j0.b4": "Documenter soigneusement les demandes clients dans nos systèmes.",
+        "exp.j0.b5": "Garantir une haute satisfaction client et une forte qualité de service grâce à mon travail.",
+
+        "exp.j1.title": "Technicien Support Informatique",
+        "exp.j1.b1": "Gestion des incidents matériels (ordinateurs, imprimantes, périphériques) et support réseau de premier niveau (connectivité, configuration routeurs/Wi-Fi).",
+        "exp.j1.b2": "Installation et configuration des postes de travail pour les employés.",
+        "exp.j1.b3": "Suivi des tickets et reporting via CRM, en assurant un support rapide, efficace et orienté satisfaction client.",
+        "exp.j2.title": "Conseiller Support Technique",
+        "exp.j2.b1": "Assistance technique et suivi des demandes clients, avec résolution proactive des incidents.",
+        "exp.j2.b2": "Coordination avec les équipes internes pour garantir un service fiable.",
+        "exp.j2.b3": "Utilisation d'outils CRM et communication claire pour optimiser la satisfaction client.",
+        "exp.j3.title": "Conseiller Client",
+        "exp.j3.b1": "Accompagnement des clients dans le suivi de leurs envois nationaux et internationaux.",
+        "exp.j3.b2": "Résolution proactive des réclamations et coordination avec les équipes logistiques.",
+        "exp.j3.b3": "Utilisation d'outils CRM et communication claire pour renforcer la satisfaction client.",
+
+        "edu.title1": "Études",
+        "edu.title2": "& Formations",
+        "edu.e1.tag": "Développement Full-Stack",
+        "edu.e1.title": "Formation MERN Stack",
+        "edu.e2.tag": "Diplôme Technique",
+        "edu.e2.title": "Maintenance des systèmes automatisés",
+        "edu.e3.tag": "Baccalauréat",
+        "edu.e3.title": "Baccalauréat Technique",
+
+        "contact.title1": "Travaillons",
+        "contact.title2": "ensemble",
+        "contact.desc": "Je suis ouvert aux postes en support IT, aux postes de développeur full-stack junior et aux projets freelance. N'hésitez pas à me contacter — je réponds rapidement.",
+        "contact.email": "Email",
+        "contact.phone": "Téléphone",
+
+        "footer.rights": "Tous droits réservés.",
+        "footer.built": "Réalisé avec HTML, Tailwind CSS & beaucoup de ☕"
+      },
+
+      de: {
+        "nav.about": "Über mich",
+        "nav.skills": "Fähigkeiten",
+        "nav.experience": "Erfahrung",
+        "nav.education": "Ausbildung",
+        "nav.contact": "Kontakt",
+
+        "hero.location": "Tunis, Tunesien · Offen für Möglichkeiten",
+        "hero.greeting": "Hallo, ich bin",
+        "hero.title": "Zweisprachiger IT-Support-Techniker · Full-Stack MERN-Entwickler",
+        "hero.desc": "Ich verbinde praktische IT-Support-Erfahrung mit wachsenden Full-Stack-Entwicklungskenntnissen. Gewissenhaft, proaktiv und kundenorientiert — ich löse Probleme schnell und sorge für zufriedene Nutzer.",
+        "hero.cta1": "Kontakt aufnehmen",
+        "hero.cta2": "GitHub ansehen",
+
+        "about.title1": "Über",
+        "about.title2": "mich",
+        "about.p1": "Zweisprachiger (FR/EN) IT-Support-Techniker mit solider Erfahrung in Hardware, Software und Netzwerksupport der ersten Ebene. Ich habe mit internationalen Teams bei HP Inc., UPS Logistik und Delta Center gearbeitet — Ticketing, Diagnose und Endbenutzer-Support unter Windows, macOS und Peripheriegeräten.",
+        "about.p2": "Neben dem Support bin ich Junior-Full-Stack-Entwickler mit Spezialisierung auf den MERN-Stack (MongoDB, Express, React, Node.js) und fundiertem Verständnis moderner Web-Grundlagen. Ich erweitere derzeit meine Entwicklerfähigkeiten, um die Lücke zwischen IT-Betrieb und Softwareentwicklung zu schließen.",
+        "about.p3": "Was mich antreibt: klare Kommunikation, geduldige Problemlösung und ein reibungsloses Erlebnis für jeden Nutzer — technisch oder nicht.",
+        "about.stat1": "Jahre in IT-Support & Kundenservice",
+        "about.stat2": "Gesprochene Sprachen (FR · EN · DE)",
+
+        "skills.title1": "Fähigkeiten",
+        "skills.title2": "& Expertise",
+        "skills.tech": "Technisch",
+        "skills.tech1": "✅ Zweisprachiger technischer Support (FR/EN) — remote & vor Ort",
+        "skills.tech2": "✅ Fehlerbehebung bei Hardware, Software & Netzwerk",
+        "skills.tech3": "✅ Netzwerksupport der ersten Ebene: Router, WLAN, Konnektivität",
+        "skills.tech4": "✅ Installation & Konfiguration von Arbeitsplätzen",
+        "skills.tech5": "✅ CRM-, Ticketing- & Diagnose-Tools (ServiceNow, Xstore, Logmein, HP)",
+        "skills.tech6": "✅ Windows, macOS, Drucker, Peripheriegeräte",
+        "skills.tech7": "✅ MERN-Stack: MongoDB, Express, React, Node.js",
+        "skills.soft": "Soziale Kompetenzen",
+        "skills.soft1": "💬 Kundenorientiert mit aktivem Zuhören",
+        "skills.soft2": "💬 Klare Kommunikation & Präsentation für nicht-technische Nutzer",
+        "skills.soft3": "💬 Sorgfalt, Geduld & Proaktivität bei der Problemlösung",
+        "skills.soft4": "💬 Wohlfühlen in multikulturellen & internationalen Teams",
+        "skills.lang": "Sprachen",
+        "skills.lang1": "🇫🇷 Französisch — C1",
+        "skills.lang2": "🇬🇧 Englisch — Fließend",
+        "skills.lang3": "🇩🇪 Deutsch — Fließend",
+
+        "exp.title1": "Berufliche",
+        "exp.title2": "Erfahrung",
+        "exp.present": "Heute",
+
+        "exp.j0.title": "Kundenberater",
+        "exp.j0.b1": "Du beantwortest Kundenanfragen rund um Bestellungen, Lieferungen, Produkte, Zahlungen und Retouren.",
+        "exp.j0.b2": "Du unterstützt bei Reklamationen und findest passende Lösungen.",
+        "exp.j0.b3": "Du betreust Kundinnen und Kunden über Telefon, E-Mail und Chat.",
+        "exp.j0.b4": "Du dokumentierst Kundenanliegen sorgfältig in unseren Systemen.",
+        "exp.j0.b5": "Du sorgst mit deiner Arbeit für eine hohe Kundenzufriedenheit und eine starke Servicequalität.",
+
+        "exp.j1.title": "IT-Support-Techniker",
+        "exp.j1.b1": "Bearbeitung von Hardware-Störungen (Computer, Drucker, Peripheriegeräte) und Netzwerksupport der ersten Ebene (Konnektivität, Router-/WLAN-Konfiguration).",
+        "exp.j1.b2": "Installation und Konfiguration von Arbeitsplätzen für Mitarbeiter.",
+        "exp.j1.b3": "Ticketverfolgung und Reporting über CRM für schnellen, effizienten und kundenorientierten Support.",
+        "exp.j2.title": "Technischer Support-Berater",
+        "exp.j2.b1": "Technische Unterstützung und Bearbeitung von Kundenanfragen mit proaktiver Störungsbehebung.",
+        "exp.j2.b2": "Koordination mit internen Teams zur Gewährleistung eines zuverlässigen Services.",
+        "exp.j2.b3": "Nutzung von CRM-Tools und klarer Kommunikation zur Optimierung der Kundenzufriedenheit.",
+        "exp.j3.title": "Kundenberater",
+        "exp.j3.b1": "Unterstützung von Kunden bei der Verfolgung nationaler und internationaler Sendungen.",
+        "exp.j3.b2": "Proaktive Bearbeitung von Beschwerden und Koordination mit Logistikteams.",
+        "exp.j3.b3": "Nutzung von CRM-Tools und klarer Kommunikation zur Stärkung der Kundenzufriedenheit.",
+
+        "edu.title1": "Ausbildung",
+        "edu.title2": "& Weiterbildung",
+        "edu.e1.tag": "Full-Stack-Entwicklung",
+        "edu.e1.title": "MERN-Stack-Programm",
+        "edu.e2.tag": "Technisches Diplom",
+        "edu.e2.title": "Wartung automatisierter Systeme",
+        "edu.e3.tag": "Abitur",
+        "edu.e3.title": "Technisches Abitur",
+
+        "contact.title1": "Lass uns",
+        "contact.title2": "zusammenarbeiten",
+        "contact.desc": "Ich bin offen für IT-Support-Positionen, Junior-Full-Stack-Entwicklerstellen und Freelance-Projekte. Kontaktieren Sie mich gerne — ich antworte schnell.",
+        "contact.email": "E-Mail",
+        "contact.phone": "Telefon",
+
+        "footer.rights": "Alle Rechte vorbehalten.",
+        "footer.built": "Erstellt mit HTML, Tailwind CSS & viel ☕"
+      }
+    };
+  </script>
+
+  <!-- ============ APP LOGIC ============ -->
+  <script>
+    // ---------- Theme ----------
+    const root = document.documentElement;
+    const themeBtn = document.getElementById('themeBtn');
+
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'light') root.classList.remove('dark');
+    else root.classList.add('dark'); // default dark
+
+    themeBtn.addEventListener('click', () => {
+      root.classList.toggle('dark');
+      localStorage.setItem('theme', root.classList.contains('dark') ? 'dark' : 'light');
+    });
+
+    // ---------- Language ----------
+    const langBtn   = document.getElementById('langBtn');
+    const langMenu  = document.getElementById('langMenu');
+    const langLabel = document.getElementById('langLabel');
+
+    function setLanguage(lang) {
+      const dict = translations[lang] || translations.en;
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (dict[key]) el.textContent = dict[key];
+      });
+      document.documentElement.lang = lang;
+      langLabel.textContent = lang.toUpperCase();
+      localStorage.setItem('lang', lang);
+    }
+
+    langBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      langMenu.classList.toggle('open');
+    });
+    document.addEventListener('click', () => langMenu.classList.remove('open'));
+
+    langMenu.querySelectorAll('[data-lang]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        setLanguage(btn.dataset.lang);
+        langMenu.classList.remove('open');
+      });
+    });
+
+    // Init language
+    setLanguage(localStorage.getItem('lang') || 'en');
+
+    // ---------- Misc ----------
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    menuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+    mobileMenu.querySelectorAll('a').forEach(l => l.addEventListener('click', () => mobileMenu.classList.add('hidden')));
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
